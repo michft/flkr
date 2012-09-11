@@ -1,0 +1,17 @@
+Algo
+
+Receive search term.
+
+Search Flickr
+
+Take results and paginate (5).
+
+Return page.
+
+
+
+Note
+PHP, html, css (no javascript).
+
+Start on paginate, search will be easier when results just plugged in.
+
