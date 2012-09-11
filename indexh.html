@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Michael's place on the web.</title>
+    <meta name="author" content="Michael Tomkins" />
+    <meta name="robots" content="all" />
+    <meta name="rights-standard" content="content;cc:by-nc" />
+    <link rel="icon" type="image/png" href="http://mich431.net/siteimage.png">
+    <link type="text/css" rel="stylesheet" href="http://mich431.net/css/site.css">
+    <base href="http://www.mich431.net/">
+</head>
+<body>
+    <div id="outer">
+        <div id="nav_flow" class="nav">
+            <a href="http://mich431.net/" title="Michael Tomkins' Home">Home</a> <a href="http://mich431.net/resume.html" title="Resume">Hire</a> <a href="http://mich431.net/projects.html" title="Projects by Michael Tomkins">Projects</a> <a href="http://validator.w3.org/check?uri=referer" title="Valid html">Valid html</a>
+        </div>
+        <div id="inner">
+            <div id="content">
+                    <div>
+                        <img src="./images/mich431net.png" alt="mich431.net" width="519" height="137" />
+                    </div>
+                    <h1 class="home">Welcome</h1>
+                    <p>For anyone who is interested, here's the <a href="./resume.html">resume</a> (also in 
+                    <a href="./resume.doc">.doc</a>). You can use any of the usual suspects to get in contact with me, admin@ postmaster@ webmaster@ etc.</p>
+                    <p>There are some project notes on 
+                    <a href="nslug.html">installing armel on a NSLU2.</a> Other notes on 
+                    <a href="ddd.html">using dyndns and ddclient with a Billion router to keep a dynamic IP's name fixed.</a>
+                    Even <a href="m68k.html">installing Debian on a m68k computer.</a> </p>
+                    <p>These pages are being served on a nginx server because it's just 
+                    <a href="http://mich431.net/cmpnginx.txt"> faster</a> (even on a 
+                    <a href="https://mich431.net/index.html">secure TLS setup</a>
+                    ) running on a NSLU2 with Debian Wheezy OS. The entire system is on a 4GB flash disk and runs in 
+                    <a href="up.txt">32MB memory</a>.</p>
+                    <p>The server uptime is 21 days and 13 hours, according to the hourly 
+                    <a href='cron.txt'>cron script.</a> Current record is 238 days and 21 hours, last attempt was  7 hours.</p>
+                    <p>And here's a pie chart of uptime data, I started recording this data mid March 2010.</p>
+                    <div id="pie" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+                    <p>Now with smaller images thanks to imagemagick.</p>
+                </div>
+            </div>
+        </div>
+
+	<script type="text/javascript">
+	/* Great error logger idea from http://devblog.xing.com/frontend/how-to-log-javascript-errors/ */
+	window.onerror = function(errorMessage, url, line) {
+		var loggerUrl = "http://mich431.net/";
+		var parameters = "?description=" + escape(errorMessage)
+			+ "&amp;url=" + escape(url)
+			+ "&amp;line=" + escape(line)
+			+ "&amp;parent_url=" + escape(document.location.href)
+			+ "&amp;user_agent=" + escape(navigator.userAgent);
+ 
+		/** Send error to server */
+		new Image().src = loggerUrl + "error" + parameters;
+	};
+	</script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	
+	<!-- Pie chart code from http://www.highcharts.com/ -->
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript">
+	(function($){ // encapsulate jQuery
+	
+	var chart
+	var up =  [ ['3 days, 13:09', 5109],
+		['22 days, 18:15', 32775],
+		['35 days, 2:03', 50523],
+		['36 days, 18:24', 52944],
+		['86 days, 15:08', 124748],
+		['109 days, 22:49', 158329],
+		['238 days, 21:59', 344039],
+		['42 days, 23:38',  61898],
+		['153 days, 4:35', 220595],
+		['47 days, 2:51',  67851],
+		['21 days, 12:38', 30998] ]  // End up data.
+
+	up.sort(function(a, b){
+        	var a1= a[1], b1= b[1]
+        	if(a1== b1) return 0
+        	return a1< b1? 1: -1
+	}); // could also http://jsfiddle.net/ebuTs/16/ 
+
+	{var i = 0
+	while(up.length >= 9) {
+		a = up.pop()
+		i = i + a[1]
+	}
+	if (i != 0) up.push(['All the rest' , i]) }
+
+	$(document).ready(function() {
+		chart = new Highcharts.Chart({
+			chart: {
+				renderTo: 'pie',
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false
+			},
+			tooltip: {
+				formatter: function() {
+					return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*10)/10 +' %';
+				}
+			},
+			title: {
+				text: "Time Between Restarts.",
+			},
+			legend: {
+				align: 'right',
+				layout : 'vertical'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					showInLegend: true,
+					dataLabels: {
+						enabled: false,
+					},
+					size : "95%",
+					cropThreshold : 8
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: 'Uptime data',
+				data: up
+				}] 
+			});
+		});
+	})(jQuery);
+
+	</script>
+
+        <!-- menubar from Mike Cardwell https://grepular.com/ -->
+        <script type="text/javascript" src="http://www.mich431.net/js/common.js"></script>
+    </body>
+</html>
