@@ -1,17 +1,21 @@
 Algo
 
+Serve startpage, index.html, form return.
+
 Receive search term.
 
 Search Flickr
 
 Take results and paginate (5).
 
-Return page.
+Return resultspage.
 
 
 
 Note
 PHP, html, css (no javascript).
+
+Standard libaries only, no google fu phpFlickr
 
 Start on paginate, search will be easier when results just plugged in.
 
