@@ -17,7 +17,7 @@
                 <div id="flickrForm">
                     <form action="flickr.php" method="get">
                         Another Search: <input type="text" name="searchTerm" />
-			<input type="hidden" value="1" name="page" />
+			<input type="hidden" value="1" name="photo" />
                         <input type="submit" />
                     </form>
                 </div>
@@ -28,12 +28,14 @@
 
 // Validate todo.
 $search_term = htmlspecialchars($_GET['searchTerm']);
-echo $search_term . "<br />";
+
+// echo $search_term . "<br />";
 //$page = intval(htmlspecialchars($_GET['page'])) ;
-//echo $page ;
+
 $photo = intval(htmlspecialchars($_GET['photo'])) ;
-echo $photo . "<br />";
+//echo $photo . "<br />";
 $page = ceil($photo/100);
+// echo $page . "<br />" ;
 
 
 // Modified, original at http://www.flickr.com/services/api/response.php.html
@@ -62,7 +64,7 @@ foreach ($params as $k => $v){
 
 $url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
 
-//echo $url;
+//echo $url . "<br />" ;
 
 $rsp = file_get_contents($url);
 
@@ -81,10 +83,12 @@ if ($rsp_obj['stat'] == 'ok'){
 	echo "Call failed!";
 }
 //*/
-
+$line="
+";
 $photo_total = intval($rsp_obj[photos][total]);
 $page_num = intval($page);
-echo $page . "<br />";
+
+//echo $page . "<br />";
 
 $photo_top = $page_num * 100;
 if ($photo_top > $photo_total){
@@ -94,6 +98,24 @@ if ($photo_top > $photo_total){
     $page_next = true;
 }
 
+echo $line . '<div id="thumbnails">';
+$photo_round_five = floor($photo/5)*5;
+//echo $photo_round_five;
+
+for ($i = 1; $i <= 5 ; $i++){
+    $j = $photo_round_five + $i;
+  //  echo $j . "   <br />    ";
+    $photo_farm = (string)$rsp_obj[photos][photo][$j][farm];
+    $photo_server = (string)$rsp_obj[photos][photo][$j][server];
+    $photo_id = (string)$rsp_obj[photos][photo][$j][id];
+    $photo_secret = (string)$rsp_obj[photos][photo][$j][secret];
+
+    echo $line . '<a href="http://farm' . $photo_farm . '.staticflickr.com/' . $photo_server . '/' . $photo_id . '_' . $photo_secret . '_m.jpg">' . '<img src="http://farm' . $photo_farm . '.staticflickr.com/' . $photo_server . '/' . $photo_id . '_'   . $photo_secret . '_t.jpg"></a>' ;
+}
+
+echo $line . "</div>";
+
+
 
 $photo_base = $photo_top - 99;
 if ($photo_base < 2){
@@ -102,25 +124,21 @@ if ($photo_base < 2){
 } else {
     $page_prev = true;
 }
-echo "<br />";
-
-echo "ph tot " . $photo_total . "pg this " . $page_num . "photo_top " . $photo_top . "photo_base" . $photo_base;
-
-echo "<br />";
 if ($page_prev == true) {
-    echo '\n' . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_base-100)  . '"> '. ($photo_base-100) . " - " . ($photo_base-1) . '</a><br />' ;
+    echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_base-100)  . '"> '. ($photo_base-100) . " - " . ($photo_base-1) . '</a>' ;
 }
-
-
 
 for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
 {
-    echo $i . "-" . ($i+4) . " " ;
-
+    if ($i > $photo || $photo > ($i+4)){
+        echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . $i  . '"> '. $i . " - " . ($i+4) . '</a>' ;
+    } else {
+        echo $line . $i . " - " . ($i+4) ;
+    }
 }
 
 if ($page_next == true) {
-    echo '\n' . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a><br />' ;
+    echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a><br />' ;
 }
 
                 ?>

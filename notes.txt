@@ -24,3 +24,6 @@ Start on paginate, search will be easier when results just plugged in.
 search returns 4000 max, according to API. Wrong, returns max 4000 in a page, data shows lots of pages for terms.
 
 use API to handle all DB. If page 1-20 serve 5 images, if page > 20 get new grouping, keep current resp until reloading. Have number links on page bottom.
+
+
+todo error in last pagination. 
