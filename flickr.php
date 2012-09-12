@@ -15,35 +15,59 @@
         <div id="inner">
             <div id="content">
                 <?php
-// Subject of email sent to you.
-$subject = 'Camp form from ' . htmlspecialchars($_POST['searchTerm']);
+// Validate todo.
+$searchTerm = htmlspecialchars($_GET['searchTerm']);
 echo $subject;
-// Your email address. This is where the form information will be sent.
-$emailadd = 'm@mich431.net';
-
-// Where to redirect after form is processed.
-$url = 'http://mich431.net/index.html';
-
-// Makes all fields required. If set to '1' no field can not be empty. If set to '0' any or all fields can be empty.
-$req = '0';
 
 
-                    $text = "Results from form:\n\n";
-                    $space = ' ';
-                    $line = '
-';
-                    $csv = '';
-                    foreach ($_POST as $key => $value){
-                        $value = htmlspecialchars($value);
-                        if ($req == '1'){
-                            if ($value == '')
-                                {echo "$key is empty";die;}
-                        }
-                        $j = strlen($key);
-                        if ($j >= 80)
-                            {echo "Name of form element $key cannot be longer than 80 characters";die;}
-                        echo "<br />" .  $value;
-                    }
+// http://www.flickr.com/services/api/response.php.html
+#
+# build the API URL to call
+#
+
+$params = array(
+	'api_key'	=> '90619c927f53af93c96106327c974951',
+	'method'	=> 'flickr.photos.search',
+	'text'	        => $searchTerm,
+	'format'	=> 'php_serial',
+);
+
+$encoded_params = array();
+
+foreach ($params as $k => $v){
+	$encoded_params[] = urlencode($k).'='.urlencode($v);
+}
+
+
+#
+# call the API and decode the response
+#
+
+$url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
+
+$rsp = file_get_contents($url);
+
+echo $rsp;
+
+$rsp_obj = unserialize($rsp);
+
+
+
+#
+# display the photo title (or an error if it failed)
+#
+
+if ($rsp_obj['stat'] == 'ok'){
+
+	$photo_title = $rsp_obj['photo']['title']['_content'];
+
+	echo "Title is $photo_title!";
+}else{
+
+	echo "Call failed!";
+}
+
+
                 ?>
 
             </div>
