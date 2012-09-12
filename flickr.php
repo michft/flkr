@@ -115,6 +115,7 @@ if ($page_next == true) {
 
 echo $line . "</div>";
 ?>
+
                 <div id="flickrForm">
                     <form action="flickr.php" method="get">
                         Search: <input type="text" name="searchTerm" />
