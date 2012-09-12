@@ -9,6 +9,7 @@
     <!-- <link rel="icon" type="image/png" href="http://mich431.net/siteimage.png">
     <link type="text/css" rel="stylesheet" href="http://mich431.net/css/site.css">
     <base href="http://www.mich431.net/"> -->
+    <link type="text/css" rel="stylesheet" href="./site.css">
 </head>
 <body>
     <div id="outer">
