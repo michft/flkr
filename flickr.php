@@ -22,6 +22,7 @@
                 <?php
 
 // Validate todo.
+
 $search_term = htmlspecialchars($_GET['searchTerm']);
 
 
