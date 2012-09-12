@@ -79,7 +79,7 @@ if ($photo_base < 2){
     $page_prev = true;
 }
 
-echo $line . '<div id="thumbnails">';
+echo '                <div id="thumbnails">';
 $photo_round_five = floor(($photo-$photo_base+1)/5)*5;
 
 for ($i = 1; $i <= 5 ; $i++){
@@ -122,7 +122,6 @@ echo $line . "</div>";
                         <input type="submit" />
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
