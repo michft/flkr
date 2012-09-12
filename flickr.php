@@ -6,9 +6,6 @@
     <meta name="author" content="Michael Tomkins" />
     <meta name="robots" content="all" />
     <meta name="rights-standard" content="content;cc:by-nc" />
-    <!-- <link rel="icon" type="image/png" href="http://mich431.net/siteimage.png">
-    <link type="text/css" rel="stylesheet" href="http://mich431.net/css/site.css">
-    <base href="http://www.mich431.net/"> -->
     <link type="text/css" rel="stylesheet" href="./site.css">
 </head>
 <body>
@@ -17,7 +14,7 @@
             <div id="content">
                 <div id="flickrForm">
                     <form action="flickr.php" method="get">
-                        Another Search: <input type="text" name="searchTerm" />
+                        Search: <input type="text" name="searchTerm" />
                         <input type="hidden" value="1" name="photo" />
                         <input type="submit" />
                     </form>
@@ -27,13 +24,9 @@
 // Validate todo.
 $search_term = htmlspecialchars($_GET['searchTerm']);
 
-// echo $search_term . "<br />";
-//$page = intval(htmlspecialchars($_GET['page'])) ;
 
 $photo = intval(htmlspecialchars($_GET['photo'])) ;
-//echo $photo . "<br />";
 $page = ceil($photo/100);
-// echo $page . "<br />" ;
 
 
 // Modified, original at http://www.flickr.com/services/api/response.php.html
@@ -62,31 +55,17 @@ foreach ($params as $k => $v){
 
 $url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
 
-//echo $url . "<br />" ;
 
 $rsp = file_get_contents($url);
 
-//echo $rsp;
 $rsp_obj = unserialize($rsp);
 
 
-// end response.php.html
-/*
-if ($rsp_obj['stat'] == 'ok'){
-		$photo_title = $rsp_obj[photos][photo][4][owner];
-		$photoTotal = $rsp_obj[photos][total];
-	echo $photo_title . " " .  $photoTotal;
-}else{
-
-	echo "Call failed!";
-}
-//*/
 $line="
                 ";
 $photo_total = intval($rsp_obj[photos][total]);
 $page_num = intval($page);
 
-//echo $page . "<br />";
 
 $photo_top = $page_num * 100;
 if ($photo_top > $photo_total){
@@ -108,7 +87,6 @@ if ($photo_base < 2){
 
 echo $line . '<div id="thumbnails">';
 $photo_round_five = floor(($photo-$photo_base+1)/5)*5;
-//echo $photo_round_five;
 
 for ($i = 1; $i <= 5 ; $i++){
     $j = $photo_round_five + $i;
@@ -140,11 +118,11 @@ for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
 }
 
 if ($page_next == true) {
-    echo $line . '    <a href="./flickr.php?searchTerm=' . $search_term . '&amp;photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a><br />' ;
+    echo $line . '    <a href="./flickr.php?searchTerm=' . $search_term . '&amp;photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a>' ;
 }
 
 echo $line . "</div>";
-                ?>
+            ?>
 
             </div>
         </div>

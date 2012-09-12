@@ -1,0 +1,33 @@
+body {
+    background-color: #ffffff; 
+    color: #000000; 
+    margin:0; 
+    padding:0; 
+    font-family: arial, verdana, sans-serif}
+a:link {
+    color: #000099; 
+    text-decoration: none; 
+    background-color: #ffffff}
+a:hover {
+    text-decoration: underline}
+#outer { 
+    text-align:left; 
+    line-height:1.4em}
+#inner { 
+    max-width:1200px; 
+    margin: 10%}
+#thumbnails, #links, #flickrForm {
+    min-width: 600px;
+    clear: both}
+h1 {
+    margin-left:0%; 
+    margin-top:1.2em; 
+    margin-bottom:0.8em; 
+    text-align:left; 
+    font-size: 150%}
+p {
+    text-align: left}
+img {
+    float: left; 
+    margin: 1%}
+
