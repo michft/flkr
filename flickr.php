@@ -17,10 +17,10 @@
                 <?php
 // Validate todo.
 $searchTerm = htmlspecialchars($_GET['searchTerm']);
-echo $subject;
+echo $searchTerm . "<br />";
 
 
-// http://www.flickr.com/services/api/response.php.html
+// Modified, original at http://www.flickr.com/services/api/response.php.html
 #
 # build the API URL to call
 #
@@ -30,6 +30,7 @@ $params = array(
 	'method'	=> 'flickr.photos.search',
 	'text'	        => $searchTerm,
 	'format'	=> 'php_serial',
+	'page'          => $page,
 );
 
 $encoded_params = array();
@@ -45,28 +46,24 @@ foreach ($params as $k => $v){
 
 $url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);
 
+//echo $url;
+
 $rsp = file_get_contents($url);
 
-echo $rsp;
-
+//echo $rsp;
 $rsp_obj = unserialize($rsp);
 
 
-
-#
-# display the photo title (or an error if it failed)
-#
-
+// end response.php.html
+/*
 if ($rsp_obj['stat'] == 'ok'){
-
-	$photo_title = $rsp_obj['photo']['title']['_content'];
-
-	echo "Title is $photo_title!";
+		$photo_title = $rsp_obj[photos][photo][4][owner];
+		$photoTotal = $rsp_obj[photos][total];
+	echo $photo_title . " " .  $photoTotal;
 }else{
 
 	echo "Call failed!";
-}
-
+} //*/
 
                 ?>
 
