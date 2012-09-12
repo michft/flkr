@@ -27,10 +27,13 @@
 
 
 // Validate todo.
-$searchTerm = htmlspecialchars($_GET['searchTerm']);
-echo $searchTerm . "<br />";
-$page = intval(htmlspecialchars($_GET['page'])) ;
-echo $page ;
+$search_term = htmlspecialchars($_GET['searchTerm']);
+echo $search_term . "<br />";
+//$page = intval(htmlspecialchars($_GET['page'])) ;
+//echo $page ;
+$photo = intval(htmlspecialchars($_GET['photo'])) ;
+echo $photo . "<br />";
+$page = ceil($photo/100);
 
 
 // Modified, original at http://www.flickr.com/services/api/response.php.html
@@ -41,7 +44,7 @@ echo $page ;
 $params = array(
 	'api_key'	=> '90619c927f53af93c96106327c974951',
 	'method'	=> 'flickr.photos.search',
-	'text'	        => $searchTerm,
+	'text'	        => $search_term,
 	'format'	=> 'php_serial',
 	'page'          => $page,
 );
@@ -76,12 +79,12 @@ if ($rsp_obj['stat'] == 'ok'){
 }else{
 
 	echo "Call failed!";
-} 
+}
 //*/
 
 $photo_total = intval($rsp_obj[photos][total]);
 $page_num = intval($page);
-echo $page; 
+echo $page . "<br />";
 
 $photo_top = $page_num * 100;
 if ($photo_top > $photo_total){
@@ -105,8 +108,10 @@ echo "ph tot " . $photo_total . "pg this " . $page_num . "photo_top " . $photo_t
 
 echo "<br />";
 if ($page_prev == true) {
- echo "photo Prev";
+    echo '\n' . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_base-100)  . '"> '. ($photo_base-100) . " - " . ($photo_base-1) . '</a><br />' ;
 }
+
+
 
 for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
 {
@@ -115,8 +120,7 @@ for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
 }
 
 if ($page_next == true) {
- echo "photo Next";
-
+    echo '\n' . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a><br />' ;
 }
 
                 ?>
