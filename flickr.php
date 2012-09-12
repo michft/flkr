@@ -21,10 +21,7 @@
                         <input type="submit" />
                     </form>
                 </div>
-
                 <?php
-
-
 
 // Validate todo.
 $search_term = htmlspecialchars($_GET['searchTerm']);
@@ -114,43 +111,43 @@ $photo_round_five = floor(($photo-$photo_base+1)/5)*5;
 
 for ($i = 1; $i <= 5 ; $i++){
     $j = $photo_round_five + $i;
-    echo $j . "   <br />    ";
+//    echo $j . "   <br />    ";
     $photo_farm = (string)$rsp_obj[photos][photo][$j][farm];
     $photo_server = (string)$rsp_obj[photos][photo][$j][server];
     $photo_id = (string)$rsp_obj[photos][photo][$j][id];
     $photo_secret = (string)$rsp_obj[photos][photo][$j][secret];
+    $photo_alt = (string)$rsp_obj[photos][photo][$j][title];
 
-    echo $line . '<a href="http://farm' . $photo_farm . '.staticflickr.com/' . $photo_server . '/' . $photo_id . '_' . $photo_secret . '_m.jpg">' . '<img src="http://farm' . $photo_farm . '.staticflickr.com/' . $photo_server . '/' . $photo_id . '_'   . $photo_secret . '_t.jpg"></a>' ;
+    echo $line . '    <a href="http://farm' . $photo_farm . '.staticflickr.com/' . $photo_server . '/' . $photo_id . '_' . $photo_secret . '_m.jpg">' . '<img src="http://farm' . $photo_farm . '.staticflickr.com/' . $photo_server . '/' . $photo_id . '_'   . $photo_secret . '_t.jpg" alt="' . $photo_alt  . '"></a>' ;
 }
 
 echo $line . "</div>";
-
-
+echo $line . '<div id="links">';
 
 
 if ($page_prev == true) {
-    echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_base-100)  . '"> '. ($photo_base-100) . " - " . ($photo_base-1) . '</a>' ;
+    echo $line . '    <a href="./flickr.php?searchTerm=' . $search_term . '&amp;photo=' . ($photo_base-100)  . '"> '. ($photo_base-100) . " - " . ($photo_base-1) . '</a>' ;
 }
 
 for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
 {
     if ($i > $photo || $photo > ($i+4)){
-        echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . $i  . '"> '. $i . " - " . ($i+4) . '</a>' ;
+        echo $line . '    <a href="./flickr.php?searchTerm=' . $search_term . '&amp;photo=' . $i  . '"> '. $i . " - " . ($i+4) . '</a>' ;
     } else {
-        echo $line . $i . " - " . ($i+4) ;
+        echo $line . "    " . $i . " - " . ($i+4) ;
     }
 }
 
 if ($page_next == true) {
-    echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a><br />' ;
+    echo $line . '    <a href="./flickr.php?searchTerm=' . $search_term . '&amp;photo=' . ($photo_top+1)  . '"> '. ($photo_top+1) . " - " . ($photo_top+100) . '</a><br />' ;
 }
 
+echo $line . "</div>";
                 ?>
 
             </div>
         </div>
     </div>
-
 </body>
 </html>
 
