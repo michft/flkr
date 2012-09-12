@@ -18,7 +18,8 @@ a:hover {
     margin: 10%}
 #thumbnails, #links, #flickrForm {
     min-width: 600px;
-    clear: both}
+    clear: both;
+    padding: 5%}
 h1 {
     margin-left:0%; 
     margin-top:1.2em; 

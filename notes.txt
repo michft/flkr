@@ -25,5 +25,5 @@ search returns 4000 max, according to API. Wrong, returns max 4000 in a page, da
 
 use API to handle all DB. If page 1-20 serve 5 images, if page > 20 get new grouping, keep current resp until reloading. Have number links on page bottom.
 
-todo error in last pagination. 
 todo redo 50, 500 pull, save query
+
