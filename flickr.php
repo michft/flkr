@@ -14,17 +14,24 @@
     <div id="outer">
         <div id="inner">
             <div id="content">
+                <div id="flickrForm">
+                    <form action="flickr.php" method="get">
+                        Another Search: <input type="text" name="searchTerm" />
+			<input type="hidden" value="1" name="page" />
+                        <input type="submit" />
+                    </form>
+                </div>
+
                 <?php
+
+
+
 // Validate todo.
 $searchTerm = htmlspecialchars($_GET['searchTerm']);
 echo $searchTerm . "<br />";
-if (is_int( htmlspecialchars($_GET['page']))) {
-    $page = htmlspecialchars($_GET['page']) ;
-} else {
-    $page = 1 ;
-}
-
+$page = intval(htmlspecialchars($_GET['page'])) ;
 echo $page ;
+
 
 // Modified, original at http://www.flickr.com/services/api/response.php.html
 #
@@ -73,26 +80,43 @@ if ($rsp_obj['stat'] == 'ok'){
 //*/
 
 $photo_total = intval($rsp_obj[photos][total]);
-$page_total = intval($page);
-$photo_top = $page_total * 100;
+$page_num = intval($page);
+echo $page; 
+
+$photo_top = $page_num * 100;
 if ($photo_top > $photo_total){
     $photo_top = $photo_total;
+    $page_next = false;
+} else {
+    $page_next = true;
 }
 
 
 $photo_base = $photo_top - 99;
-if ($photo_base < 1){
+if ($photo_base < 2){
     $photo_base = 1;
+    $page_prev = false;
+} else {
+    $page_prev = true;
 }
 echo "<br />";
 
-echo "ph tot " . $photo_total . "pg total " . $page_total . "photo_top " . $photo_top . "photo_base" . $photo_base;
+echo "ph tot " . $photo_total . "pg this " . $page_num . "photo_top " . $photo_top . "photo_base" . $photo_base;
 
 echo "<br />";
+if ($page_prev == true) {
+ echo "photo Prev";
+}
 
 for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
 {
-    echo $i . " : " ;
+    echo $i . "-" . ($i+4) . " " ;
+
+}
+
+if ($page_next == true) {
+ echo "photo Next";
+
 }
 
                 ?>
