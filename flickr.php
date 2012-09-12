@@ -18,7 +18,13 @@
 // Validate todo.
 $searchTerm = htmlspecialchars($_GET['searchTerm']);
 echo $searchTerm . "<br />";
+if (is_int( htmlspecialchars($_GET['page']))) {
+    $page = htmlspecialchars($_GET['page']) ;
+} else {
+    $page = 1 ;
+}
 
+echo $page ;
 
 // Modified, original at http://www.flickr.com/services/api/response.php.html
 #
@@ -63,7 +69,31 @@ if ($rsp_obj['stat'] == 'ok'){
 }else{
 
 	echo "Call failed!";
-} //*/
+} 
+//*/
+
+$photo_total = intval($rsp_obj[photos][total]);
+$page_total = intval($page);
+$photo_top = $page_total * 100;
+if ($photo_top > $photo_total){
+    $photo_top = $photo_total;
+}
+
+
+$photo_base = $photo_top - 99;
+if ($photo_base < 1){
+    $photo_base = 1;
+}
+echo "<br />";
+
+echo "ph tot " . $photo_total . "pg total " . $page_total . "photo_top " . $photo_top . "photo_base" . $photo_base;
+
+echo "<br />";
+
+for ($i = $photo_base; $i <= $photo_top ; $i+=5 )
+{
+    echo $i . " : " ;
+}
 
                 ?>
 

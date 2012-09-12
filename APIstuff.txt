@@ -25,7 +25,12 @@ s:6:"secret";s:10:"43d6722136";
 s:6:"server";s:4:"8462";
 s:4:"farm";d:9;
 s:5:"title";s:11:"Warm Fuzzie";
-s:8:"ispublic";i:1;s:8:"isfriend";i:0;s:8:"isfamily";i:0;
+s:8:"ispublic";i:1;
+s:8:"isfriend";i:0;
+s:8:"isfamily";i:0;
 }i:5;a:9:
 
 http://farm9.staticflickr.com/8462/7978091572_43d6722136_m.jpg
+
+
+
