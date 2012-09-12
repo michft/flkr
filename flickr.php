@@ -17,7 +17,7 @@
                 <div id="flickrForm">
                     <form action="flickr.php" method="get">
                         Another Search: <input type="text" name="searchTerm" />
-			<input type="hidden" value="1" name="photo" />
+                        <input type="hidden" value="1" name="photo" />
                         <input type="submit" />
                     </form>
                 </div>
@@ -84,7 +84,7 @@ if ($rsp_obj['stat'] == 'ok'){
 }
 //*/
 $line="
-";
+                ";
 $photo_total = intval($rsp_obj[photos][total]);
 $page_num = intval($page);
 
@@ -98,13 +98,23 @@ if ($photo_top > $photo_total){
     $page_next = true;
 }
 
+
+
+$photo_base = $photo_top - 99;
+if ($photo_base < 2){
+    $photo_base = 1;
+    $page_prev = false;
+} else {
+    $page_prev = true;
+}
+
 echo $line . '<div id="thumbnails">';
-$photo_round_five = floor($photo/5)*5;
+$photo_round_five = floor(($photo-$photo_base+1)/5)*5;
 //echo $photo_round_five;
 
 for ($i = 1; $i <= 5 ; $i++){
     $j = $photo_round_five + $i;
-  //  echo $j . "   <br />    ";
+    echo $j . "   <br />    ";
     $photo_farm = (string)$rsp_obj[photos][photo][$j][farm];
     $photo_server = (string)$rsp_obj[photos][photo][$j][server];
     $photo_id = (string)$rsp_obj[photos][photo][$j][id];
@@ -117,13 +127,7 @@ echo $line . "</div>";
 
 
 
-$photo_base = $photo_top - 99;
-if ($photo_base < 2){
-    $photo_base = 1;
-    $page_prev = false;
-} else {
-    $page_prev = true;
-}
+
 if ($page_prev == true) {
     echo $line . '<a href="./flickr.php?searchTerm=' . $search_term . '&photo=' . ($photo_base-100)  . '"> '. ($photo_base-100) . " - " . ($photo_base-1) . '</a>' ;
 }
